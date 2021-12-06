@@ -1,0 +1,20 @@
+﻿@page "/"
+@using Rcrud.Shared
+@using Microsoft.AspNetCore.SignalR.Client
+@inject NavigationManager NM
+
+
+@code 
+{
+    private HubConnection _hc;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _hc = new HubConnectionBuilder()
+            .WithUrl(NM.BaseUri + "osobe")
+            .Build();
+        await _hc.StartAsync();
+        await _hc.SendAsync("Ping");
+    }
+
+}
