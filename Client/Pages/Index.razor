@@ -3,18 +3,60 @@
 @using Microsoft.AspNetCore.SignalR.Client
 @inject NavigationManager NM
 
+<EditForm Model=Osoba OnSubmit=Posalji>
+    <i>Ime:</i><InputText @bind-Value=Osoba.Name/><br/>
+    <i>Prezime:</i><InputText @bind-Value=Osoba.Surname/><br/>
+    <button class="btn-primary" type="submit">Posalji</button>
+</EditForm>
 
+@if (Osobe.Any())
+{
+    <table>
+        <thead>
+            <td>Id</td>
+            <td>Name</td>
+            <td>Surname</td>
+        </thead>
+
+        @foreach (Osoba o in Osobe)
+        {
+            <tr> 
+                <td>@o.Id</td>
+                <td>@o.Name</td>
+                <td>@o.Surname</td>
+            </tr>
+        }
+    </table>
+}
 @code 
 {
     private HubConnection _hc;
+    private Osoba Osoba { get; set; } = new();
+    private List<Osoba> Osobe { get; set; } = new();
 
     protected override async Task OnInitializedAsync()
     {
         _hc = new HubConnectionBuilder()
             .WithUrl(NM.BaseUri + "osobe")
             .Build();
+
+        _hc.On<List<Osoba>>("slanje", lista =>
+            {
+                Osobe = lista;
+                StateHasChanged();
+            });
+
         await _hc.StartAsync();
-        await _hc.SendAsync("Ping");
+        await _hc.SendAsync("Posalji");
     }
+
+    private async void Posalji()
+    {
+        await _hc.SendAsync("Unos", Osoba);
+        Osoba = new();
+        StateHasChanged();
+    }
+
+  
 
 }
