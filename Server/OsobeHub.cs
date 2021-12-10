@@ -12,10 +12,18 @@ namespace Rcrud.Server
             _db = db;
             _logger = logger;
         }
+
+        public void Brisanje(Osoba o)
+        {
+            _logger.LogWarning("Brisem osobu");
+            _db.Remove(o);
+            _db.SaveChanges();
+            Posalji();
+        }
         public void Unos(Osoba o)
         {
             _logger.LogInformation($"{o.Name} {o.Surname}");
-            _db.Add(o);
+            _db.Update(o);
             _db.SaveChanges();
             Posalji();
         }

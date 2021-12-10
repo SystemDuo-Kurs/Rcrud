@@ -1,7 +1,6 @@
-﻿@page "/"
+﻿@page "/kont"
 @using Rcrud.Shared
-@using Microsoft.AspNetCore.SignalR.Client
-@inject NavigationManager NM
+@inject HttpClient HC
 
 <EditForm Model=Osoba OnSubmit=Posalji>
     <i>Ime:</i><InputText @bind-Value=Osoba.Name/><br/>
@@ -31,46 +30,35 @@
         }
     </table>
 }
-@code 
-{
-    private HubConnection _hc;
+
+@code {
     private Osoba Osoba { get; set; } = new();
     private List<Osoba> Osobe { get; set; } = new();
 
-    private async void Brisi(Osoba o)
+    private async void Update()
     {
-        await _hc.SendAsync("Brisanje", o);
-        StateHasChanged();
-    }
-    private void Update(Osoba o)
-    {
-        Osoba = o;
+        Osobe = await HC.GetFromJsonAsync<List<Osoba>>("osoba");
+        if (Osobe is null)
+            Osobe = new();
         StateHasChanged();
     }
 
     protected override async Task OnInitializedAsync()
+        => Update();
+
+    private async void Brisi(Osoba o)
     {
-        _hc = new HubConnectionBuilder()
-            .WithUrl(NM.BaseUri + "osobe")
-            .Build();
-
-        _hc.On<List<Osoba>>("slanje", lista =>
-            {
-                Osobe = lista;
-                StateHasChanged();
-            });
-
-        await _hc.StartAsync();
-        await _hc.SendAsync("Posalji");
+      
+        await HC.DeleteAsync("osoba?zklj");
+        //Update();
+    }
+    private void Update(Osoba o)
+    {
+       
     }
 
     private async void Posalji()
     {
-        await _hc.SendAsync("Unos", Osoba);
-        Osoba = new();
-        StateHasChanged();
+
     }
-
-  
-
 }

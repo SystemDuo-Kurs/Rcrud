@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31912.275
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rcrud.Server", "Server\Rcrud.Server.csproj", "{8BF88ECB-FD52-41E8-AC54-B39AE33B441F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rcrud.Server", "Server\Rcrud.Server.csproj", "{8BF88ECB-FD52-41E8-AC54-B39AE33B441F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rcrud.Client", "Client\Rcrud.Client.csproj", "{E6C4F3CE-FC67-4FBD-BD36-DE5926304EC7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rcrud.Client", "Client\Rcrud.Client.csproj", "{E6C4F3CE-FC67-4FBD-BD36-DE5926304EC7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rcrud.Shared", "Shared\Rcrud.Shared.csproj", "{0205440D-1466-4850-BB6C-709EED34EA68}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rcrud.Shared", "Shared\Rcrud.Shared.csproj", "{0205440D-1466-4850-BB6C-709EED34EA68}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
